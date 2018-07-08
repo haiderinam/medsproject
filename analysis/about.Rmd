@@ -8,3 +8,4 @@ output:
 Made by Haider Inam
 PhD Student at Penn State University
 Justin Pritchard Lab
+[Pritchard Lab Website](https://sites.psu.edu/pritchardlab/)
