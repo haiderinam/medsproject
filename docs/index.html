@@ -245,16 +245,14 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/medsproject/tree/6388f5deeb18e6911cea0881bdc930d16adf62c4" target="_blank">6388f5d</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/medsproject/tree/dbeb3a49b3a6a4a6f92fdd6af88cf245ef48e30c" target="_blank">dbeb3a4</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
-    Untracked:  .DS_Store
     Untracked:  ORvalplot3a.pdf
-    Untracked:  docs/.DS_Store
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -283,6 +281,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/dbeb3a49b3a6a4a6f92fdd6af88cf245ef48e30c/analysis/index.Rmd" target="_blank">dbeb3a4</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-07-08
+</td>
+<td style="text-align:left;">
+wflow_git_commit(all = TRUE)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/medsproject/a87321bd17e88c30588649d6b78140a94feadf98/docs/index.html" target="_blank">a87321b</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-07-08
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 html
@@ -374,15 +406,7 @@ Start workflowr project.
 <p></details></p>
 <hr />
 <p>Mutual Exclusivity Downsampling Demo</p>
-<pre class="r"><code>#Run function with this: trasformabilitychecker(12,100,&#39;BRAF&#39;,&#39;NRAS&#39;,&#39;ATI&#39;,&#39;N&#39;,&#39;V600E&#39;,&#39;Q61L&#39;) 
-#meds mutual exclusivity ds
-# trasformabilitychecker&lt;- function(nsubsamples,nsims,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt){
-#Version 10    4/26/18
-#Data can be either in the form of strings (mutation vs NaN) or as numerics (1 vs 0). Logicals (TRUE/FALSE) can be added as well
-# rm(list=ls())
-require(ggplot2) #is it ok to use this line at the start of the script?</code></pre>
 <pre><code>Loading required package: ggplot2</code></pre>
-<pre class="r"><code>require(dplyr)</code></pre>
 <pre><code>Loading required package: dplyr</code></pre>
 <pre><code>Warning: package &#39;dplyr&#39; was built under R version 3.4.4</code></pre>
 <pre><code>
@@ -393,279 +417,17 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <pre><code>The following objects are masked from &#39;package:base&#39;:
 
     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code># library(ggplot2,lib.loc=&quot;~/Ati&quot;) #this wasn&#39;t working so I&#39;m jjust using library(ggplot2)
-library(ggplot2)
-library(dplyr)
-# ##################################Hardcoded Parts#############################################################################
-  nsubsamples=12 # maybe this can be removed because.
-  nsims&lt;-100 #
-  #Positive control 1
-  nameposctrl1&lt;-&#39;BRAF&#39;
-  #Positive control 1
-  nameposctrl2&lt;-&#39;NRAS&#39;
-  #Oncogene in Question
-  namegene&lt;-&#39;ATI&#39;
-  #Mutation Boolean (Y or N)
-  mtn&lt;-&#39;N&#39;
-  #Name Mutation for Positive Ctrl 1
-  nameposctrl1mt&lt;-&#39;V600E&#39;
-  #Name of Mutation for Positive Ctrl 2
-  nameposctrl2mt&lt;-&#39;Q61L&#39;
-
-##################################Data Sorting#############################################################################
-alldata=read.csv(&quot;data/All_Data_V2.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
-
-#Sorting by whether user wants to search by specific mutations or the general format overall
-if(mtn==&#39;N&#39;) {
-  Positive_Ctrl1=as.numeric(!grepl(&quot;NaN&quot;,do.call(&quot;$&quot;,list(alldata,nameposctrl1)),ignore.case = TRUE))
-  Positive_Ctrl2=as.numeric(!grepl(&quot;NaN&quot;,do.call(&quot;$&quot;,list(alldata,nameposctrl2)),ignore.case = TRUE))
-} else {
-  Positive_Ctrl1=as.numeric(grepl(nameposctrl1mt,do.call(&quot;$&quot;,list(alldata,nameposctrl1)),ignore.case = TRUE))
-  Positive_Ctrl2=as.numeric(grepl(nameposctrl2mt,do.call(&quot;$&quot;,list(alldata,nameposctrl2)),ignore.case = TRUE))
-}
-genex=as.numeric(!grepl(paste(c(&quot;NaN&quot;,&quot;0&quot;), collapse = &quot;|&quot;),do.call(&quot;$&quot;,list(alldata,namegene)))) #Searching for &#39;NaN&#39; or &#39;0&#39; in desired gene. A positive hit returns 0 and vise versa.
-
-alldata_comp=cbind(alldata[,c(1,2)],Positive_Ctrl1,Positive_Ctrl2,genex) #Data frame with all the data compiled. I add in random array to this later
-
-genex_replication_prop=sum(genex)/length(genex) #Calculating Replication Proportion
-
-#Creating Random Array (Negative Control)
-rndmarray=rbinom(length(Positive_Ctrl1),1,genex_replication_prop) #change alldata            #Decided to just call random array in the for-loop
-alldata_comp=cbind(alldata_comp,rndmarray) #Adding in random array to compiled gene data
-
-all_genex     =alldata_comp[alldata_comp$genex!=0,] #These will be used later for sampling
-all_not_genex =alldata_comp[alldata_comp$genex==0,]
-all_pc1       =alldata_comp[alldata_comp$Positive_Ctrl1!=0,]
-all_not_pc1   =alldata_comp[alldata_comp$Positive_Ctrl1==0,]
-all_pc2       =alldata_comp[alldata_comp$Positive_Ctrl2!=0,]
-all_not_pc2   =alldata_comp[alldata_comp$Positive_Ctrl2==0,]
-all_rndm      =alldata_comp[alldata_comp$rndmarray!=0,]
-all_not_rndm  =alldata_comp[alldata_comp$rndmarray==0,]
-
-#max subsample size is whichever integer is the minimum of: number of genex in sample vs. number of NOTgenex or PC1 or PC2 in sample*genexreplication proportion. For example we had 165 PC1s, therefore 340-175=165 PC1s in our data. Since we want to sample 7.35% positive hits and 92.65% negative hits, a sample containing too many positive hits can impose an upper bound on our subsampling size.
-maxsubsamplesize=min(c(genex_replication_prop*length(alldata_comp$Positive_Ctrl1),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl1))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl2))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$genex))*genex_replication_prop)))
-##################################Errors#############################################################################
-#Part in the code where exceeding the max limit, i.e. 25, returns an error
-if(nsubsamples&gt;maxsubsamplesize){
-  stop(&quot;Desired Subsample Size Exceeds Maxium Subsample Size&quot;)
-}
-#Returns error if max value &gt; 1. Will this ever be a problem?
-if(max(alldata_comp$Positive_Ctrl1|alldata_comp$Positive_Ctrl2|alldata_comp$genex)&gt;1){
-  stop(&quot;Data Contains Integers &gt;1. Please use either logicals or characters&quot;)
-}
-print(paste(&quot;Current proportion of GeneX =&quot;,round(genex_replication_prop*100,3),&quot;%&quot;))#print to console</code></pre>
 <pre><code>[1] &quot;Current proportion of GeneX = 7.353 %&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Total Number of Samples =&quot;,length(alldata_comp[,1])))</code></pre>
 <pre><code>[1] &quot;Total Number of Samples = 340&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Number of Positive Control 1 Hits =&quot;,sum(alldata_comp$Positive_Ctrl1)))</code></pre>
 <pre><code>[1] &quot;Number of Positive Control 1 Hits = 175&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Number of Positive Control 2 Hits =&quot;,sum(alldata_comp$Positive_Ctrl2)))</code></pre>
 <pre><code>[1] &quot;Number of Positive Control 2 Hits = 95&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Number of Gene of Interest Hits =&quot;,sum(alldata_comp$genex)))</code></pre>
 <pre><code>[1] &quot;Number of Gene of Interest Hits = 25&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;The maximum allowed subsample size is&quot;,maxsubsamplesize))</code></pre>
 <pre><code>[1] &quot;The maximum allowed subsample size is 12&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Therefore, during simulations, Positive Control 1 will be downsampled from&quot;,sum(alldata_comp$Positive_Ctrl1),&quot;to&quot;,maxsubsamplesize,&quot;, and Positive Control 2 will be downsampled from&quot;,sum(alldata_comp$Positive_Ctrl2),&quot;to&quot;,maxsubsamplesize))</code></pre>
 <pre><code>[1] &quot;Therefore, during simulations, Positive Control 1 will be downsampled from 175 to 12 , and Positive Control 2 will be downsampled from 95 to 12&quot;</code></pre>
-<pre class="r"><code>##################################Contingency Table Function#############################################################################
-
-contab_maker&lt;- function(gene1,gene2,arrayname) {
-  gene1_gene2_nn=nrow(arrayname[gene1==0 &amp; gene2==0,]) #N N
-  gene1_gene2_ny=nrow(arrayname[gene1==0 &amp; gene2!=0,]) #N Y
-  gene1_gene2_yn=nrow(arrayname[gene1!=0 &amp; gene2==0,]) #Y N
-  gene1_gene2_yy=nrow(arrayname[gene1!=0 &amp; gene2!=0,]) #Y Y
-  
-  con_tab_gene1_gene2=rbind(c(gene1_gene2_nn,gene1_gene2_ny),c(gene1_gene2_yn,gene1_gene2_yy))
-  con_tab_gene1_gene2
-}
-
-#Contingency Tables:
-con_tab_pctrl1_genex=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$genex,alldata_comp)
-con_tab_pctrl2_genex=contab_maker(alldata_comp$Positive_Ctrl2,alldata_comp$genex,alldata_comp)
-con_tab_pctrl1_pctrl2=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$Positive_Ctrl2,alldata_comp)
-con_tab_pctrl1_rndmarray=contab_maker(alldata_comp$Positive_Ctrl1,alldata_comp$rndmarray,alldata_comp)
-con_tab_pctrl2_rndmarray=contab_maker(alldata_comp$Positive_Ctrl2,alldata_comp$rndmarray,alldata_comp)
-
-#Fisher&#39;s Exact Test
-p_p1_genex=fisher.test(con_tab_pctrl1_genex)
-p_p2_genex=fisher.test(con_tab_pctrl2_genex)
-p_p1_p2=fisher.test(con_tab_pctrl1_pctrl2)
-p_p1_rndm=fisher.test(con_tab_pctrl1_rndmarray)
-p_p2_rndm=fisher.test(con_tab_pctrl2_rndmarray)
-
-##################################Simulations###################################################################################
-# 3 Loops here. For Sumsample size, Simulation Number, and Experiment Number.
-# Experiment number: There are 6 experiments refers to combinations of fisher&#39;s test for 4 samples (4C2=6)
-
-#Need to modify so that nsubsamples can be a range (like 10:100) rather than a number (like 100)
-nexperiments=6 #to make nexperiments a variable, alldatasamplepvals will need to be defined differently
-simresults&lt;-matrix(nrow=nsims*nsubsamples*nexperiments,ncol=9)
-
-ct=1
-
-
-for (subsamplenumber in 1:nsubsamples){
-  simresults[c(ct:((ct+(nsims*nexperiments))-1)),2]=subsamplenumber #Subsample Number: This updates the next n rows with the subsample number that the loop is on. n is calculated by number of experiments * number of simulations
-  subsamplenumbernegativehits=round(subsamplenumber/(genex_replication_prop))-subsamplenumber #This determines the number of non-hits for the sample 
-  for (simnumber in 1:nsims){
-      alldata_comp$rndmarray=rbinom(length(Positive_Ctrl1),1,genex_replication_prop) #Creates random array. Note: we&#39;re updating random array at each simulation within each subsample size.
-    
-      simresults[c(ct:((ct+nexperiments)-1)),3]=simnumber #Simulation Number. This updates the next 6 rows with the simulation number that the loop is on.
-        
-      sample_genex     =all_genex[sample(length(all_genex$genex),subsamplenumber,replace=F,prob=NULL),]
-      sample_not_genex =all_not_genex[sample(length(all_not_genex$genex),subsamplenumbernegativehits,replace=F,prob=NULL),]
-      sample_pc1       =all_pc1[sample(length(all_pc1$Positive_Ctrl1),subsamplenumber,replace=F,prob=NULL),]
-      sample_not_pc1   =all_not_pc1[sample(length(all_not_pc1$Positive_Ctrl1),subsamplenumbernegativehits,replace=F,prob=NULL),]
-      sample_pc2       =all_pc2[sample(length(all_pc2$Positive_Ctrl2),subsamplenumber,replace=F,prob=NULL),]
-      sample_not_pc2   =all_not_pc2[sample(length(all_not_pc2$Positive_Ctrl2),subsamplenumbernegativehits,replace=F,prob=NULL),]
-      sample_rndm      =all_rndm[sample(length(all_rndm$rndmarray),subsamplenumber,replace=F,prob=NULL),]
-      sample_not_rndm  =all_not_rndm[sample(length(all_not_rndm$rndmarray),subsamplenumbernegativehits,replace=F,prob=NULL),]
-      
-      #Combining n (subsample number) hits and m (subsamplenegativenumber) non-hits
-      sample_genex_comb =rbind(sample_genex,sample_not_genex) #Dunno if this is the right way to do it
-      sample_pc1_comb   =rbind(sample_pc1,sample_not_pc1)
-      sample_pc2_comb   =rbind(sample_pc2,sample_not_pc2)
-      sample_rndm_comb  =rbind(sample_rndm,sample_not_rndm)
-      
-      alldata_comp_sample&lt;-as.data.frame(cbind(sample_pc1_comb,sample_pc2_comb,sample_genex_comb,sample_rndm_comb))  #Creating array with samples so that contab_maker can use them
-      
-      #contingency tables
-      con_tab_sample_pctrl1_genex=contab_maker(sample_pc1_comb$Positive_Ctrl1,sample_pc1_comb$genex,sample_pc1_comb) #Double check to see if this is the right way to do it
-      con_tab_sample_pctrl2_genex=contab_maker(sample_pc2_comb$Positive_Ctrl2,sample_pc2_comb$genex,sample_pc2_comb)
-      con_tab_sample_pctrl1_pctrl2=contab_maker(sample_pc1_comb$Positive_Ctrl1,sample_pc1_comb$Positive_Ctrl2,sample_pc1_comb) #note how sampling pc1 vs pc2 and then finding pc2 vs pc1 has drastically different p-values. Add code that looks at which of the samples has a smaller size and then chooses to sample for 7% of that first
-      con_tab_sample_pctrl1_pctrl2=contab_maker(sample_pc2_comb$Positive_Ctrl2,sample_pc2_comb$Positive_Ctrl1,sample_pc2_comb)
-      con_tab_sample_pctrl1_rndmarray=contab_maker(sample_pc1_comb$Positive_Ctrl1,sample_pc1_comb$rndmarray,sample_pc1_comb)
-      con_tab_sample_pctrl2_rndmarray=contab_maker(sample_pc2_comb$Positive_Ctrl2,sample_pc2_comb$rndmarray,sample_pc2_comb)
-      con_tab_sample_genex_rndmarray=contab_maker(sample_genex_comb$genex,sample_genex_comb$rndmarray,sample_genex_comb)
-      
-      #Fishers exact test
-      p_s_p1_genex=fisher.test(con_tab_sample_pctrl1_genex,conf.int = 50) #p_s_ stands p-value, sample. Can name these better in the future
-      p_s_p2_genex=fisher.test(con_tab_sample_pctrl2_genex,conf.int = 50) #Could check if pc1_genex and genex_pc1 give the same p-value just to verify our test
-      p_s_p1_p2=fisher.test(con_tab_sample_pctrl1_pctrl2,conf.int = 50)
-      p_s_p1_rndm=fisher.test(con_tab_sample_pctrl1_rndmarray,conf.int = 50)
-      p_s_p2_rndm=fisher.test(con_tab_sample_pctrl2_rndmarray,conf.int = 50)
-      p_s_genex_rndm=fisher.test(con_tab_sample_genex_rndmarray,conf.int = 50)
-    
-      #Creating df that has all the simulation data so far. This will be used by the simresults df later.
-      alldatasamplepvals&lt;-as.data.frame(cbind(p_s_p1_genex$p.value,p_s_p2_genex$p.value,p_s_p1_p2$p.value,p_s_p1_rndm$p.value,p_s_p2_rndm$p.value,p_s_genex_rndm$p.value))
-      colnames(alldatasamplepvals)=c(&quot;p_s_p1_genex&quot;,&quot;p_s_p2_genex&quot;,&quot;p_s_p1_p2&quot;,&quot;p_s_p1_rndm&quot;,&quot;p_s_p2_rndm&quot;,&quot;p_s_genex_rndm&quot;)
-      alldatasampleORvals&lt;-as.data.frame(cbind(p_s_p1_genex$estimate,p_s_p2_genex$estimate,p_s_p1_p2$estimate,p_s_p1_rndm$estimate,p_s_p2_rndm$estimate,p_s_genex_rndm$estimate))
-      colnames(alldatasampleORvals)=c(&quot;p_s_p1_genex&quot;,&quot;p_s_p2_genex&quot;,&quot;p_s_p1_p2&quot;,&quot;p_s_p1_rndm&quot;,&quot;p_s_p2_rndm&quot;,&quot;p_s_genex_rndm&quot;)
-      alldatasampleCIub&lt;-as.data.frame(cbind(p_s_p1_genex$conf.int[2],p_s_p2_genex$conf.int[2],p_s_p1_p2$conf.int[2],p_s_p1_rndm$conf.int[2],p_s_p2_rndm$conf.int[2],p_s_genex_rndm$conf.int[2]))
-      colnames(alldatasampleCIub)=c(&quot;p_s_p1_genex&quot;,&quot;p_s_p2_genex&quot;,&quot;p_s_p1_p2&quot;,&quot;p_s_p1_rndm&quot;,&quot;p_s_p2_rndm&quot;,&quot;p_s_genex_rndm&quot;)
-      alldatasampleCIlb&lt;-as.data.frame(cbind(p_s_p1_genex$conf.int[1],p_s_p2_genex$conf.int[1],p_s_p1_p2$conf.int[1],p_s_p1_rndm$conf.int[1],p_s_p2_rndm$conf.int[1],p_s_genex_rndm$conf.int[1]))
-      colnames(alldatasampleCIlb)=c(&quot;p_s_p1_genex&quot;,&quot;p_s_p2_genex&quot;,&quot;p_s_p1_p2&quot;,&quot;p_s_p1_rndm&quot;,&quot;p_s_p2_rndm&quot;,&quot;p_s_genex_rndm&quot;)
-    
-    for (expnumber in 1:nexperiments) {
-      simresults[ct,1]=ct #Total Count
-      simresults[ct,4]=expnumber #Experiment Number
-      simresults[ct,5]=colnames(alldatasamplepvals[expnumber]) #Experiment Name
-      simresults[ct,6]=alldatasamplepvals[1,expnumber] #Experiment P-value. Trying to convert it into numerics
-      simresults[ct,7]=as.numeric(alldatasampleORvals[1,expnumber]) #Experiment OR-value
-      simresults[ct,8]=as.numeric(alldatasampleCIub[1,expnumber]) #Experiment 95% Upper Confidence Interval. Can be changed to other CI
-      simresults[ct,9]=as.numeric(alldatasampleCIlb[1,expnumber]) #Experiment 95% Lower Confidence Interval. Can be changed to other CI
-      
-      ct=ct+1
-    }
-  }
-}
-colnames(simresults)=c(&quot;totCt&quot;,&quot;subsample_size&quot;,&quot;sim_num&quot;,&quot;exp_num&quot;,&quot;exp_name&quot;,&quot;p_val&quot;,&quot;OR_val&quot;,&quot;CIub&quot;,&quot;CIlb&quot;)
-simresults=as.data.frame(simresults, stringsAsFactors = F, )
-simresults=transform(simresults,p_val=as.character(p_val))
-simresults=transform(simresults,p_val=as.numeric(p_val))
-
-simresults=transform(simresults,exp_num=as.character(exp_num))
-simresults=transform(simresults,exp_num=as.numeric(exp_num))
-
-simresults=transform(simresults,sim_num=as.character(sim_num))
-simresults=transform(simresults,sim_num=as.numeric(sim_num))
-
-simresults=transform(simresults,subsample_size=as.character(subsample_size))
-simresults=transform(simresults,subsample_size=as.numeric(subsample_size))
-
-simresults=transform(simresults,OR_val=as.character(OR_val))
-simresults=transform(simresults,OR_val=as.numeric(OR_val))
-
-simresults=transform(simresults,CIub=as.character(CIub))
-simresults=transform(simresults,CIub=as.numeric(CIub))
-
-simresults=transform(simresults,CIlb=as.character(CIlb))
-simresults=transform(simresults,CIlb=as.numeric(CIlb))
-
-##################################Plotting#############################################################################
-#Using ggplot
-########Plotting P-values
-datapoints=simresults %&gt;% 
-  group_by(subsample_size,exp_name) %&gt;%
-  summarise(avg_p_val=mean(p_val))
-#6 Different plots divided by Facet Wrap. Add error bars to all of these
-pvalplot&lt;-ggplot(datapoints,aes(x=subsample_size,y=avg_p_val))+geom_point()+geom_smooth(se=FALSE,aes(size=.01))+facet_wrap(~exp_name)+ggtitle(&quot;P-value across 100 simulations&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;Mean p-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-#One Plot with all the scatters
-pvalplot2&lt;-ggplot(datapoints,aes(x=subsample_size,y=avg_p_val,color=exp_name))+geom_point()+geom_smooth(se=FALSE,size=1.5)+ggtitle(&quot;P-value across 100 simulations&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;Mean p-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-
-#P values vs Sim Number at subsample size of 10 
-datapointssims=simresults %&gt;% 
-  filter(subsample_size==10) %&gt;%
-  group_by(sim_num,exp_name) %&gt;%
-  summarise(avg_p_val=mean(p_val))</code></pre>
 <pre><code>Warning: package &#39;bindrcpp&#39; was built under R version 3.4.4</code></pre>
-<pre class="r"><code>pvalplot3&lt;-ggplot(datapointssims,aes(x=sim_num,y=avg_p_val))+geom_point()+geom_smooth()+facet_wrap(~exp_name)+ggtitle(&quot;P value across Simulations. Subsample Size = 10&quot;)+xlab(&quot;Simulation Number&quot;)+ylab(&quot;P-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-
-#P values vs Sim Number at subsample size of 3 
-datapointssims=simresults %&gt;% 
-  filter(subsample_size==3) %&gt;%
-  group_by(sim_num,exp_name) %&gt;%
-  summarise(avg_p_val=mean(p_val))
-pvalplot4&lt;-ggplot(datapointssims,aes(x=sim_num,y=avg_p_val))+geom_point()+geom_smooth()+facet_wrap(~exp_name)+ggtitle(&quot;p-val of 100 simulations @ Subsample Size 10&quot;)+xlab(&quot;Simulation Number&quot;)+ylab(&quot;P-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-
-#####Plotting OR Values
-datapointsOR=simresults %&gt;%
-  group_by(subsample_size,exp_name) %&gt;%
-  summarise(avg_OR=mean(OR_val),avg_CIub=mean(CIub),avg_CIlb=mean(CIlb))
-
-orvalplot1&lt;-ggplot(datapointsOR,aes(x=subsample_size,y=avg_OR))+geom_point()+geom_smooth(se=FALSE)+facet_wrap(~exp_name)+ggtitle(&quot;Odds Ratio across 100 Simulations&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;Mean OR-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-ggsave(&quot;ORvalplot3a.pdf&quot;)</code></pre>
 <pre><code>Saving 7 x 5 in image</code></pre>
 <pre><code>`geom_smooth()` using method = &#39;loess&#39;</code></pre>
 <pre><code>Warning: Removed 11 rows containing non-finite values (stat_smooth).</code></pre>
-<pre class="r"><code>orvalplot2a&lt;-ggplot(datapointsOR,aes(x=subsample_size,y=avg_OR,color=exp_name))+geom_point()+geom_smooth(se=FALSE)+ggtitle(&quot;Odds Ratio across 100 Simulations&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;Mean OR-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-#OR Vals with CIs, non log transformed combined
-orvalplot2b&lt;-ggplot(datapointsOR,aes(x=subsample_size,y=avg_OR,color=exp_name))+geom_point()+geom_smooth(se=FALSE)+geom_ribbon(aes(ymin=avg_CIub,ymax=avg_CIlb),alpha=.2)+ggtitle(&quot;Mean OR-val of 100 simulations ~ Subsample Size&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;Mean OR-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-#OR Vals with CIs, nonlog transformed, uncomined
-orvalplot3a&lt;-ggplot(datapointsOR,aes(x=subsample_size,y=avg_OR))+geom_point()+geom_smooth(se=FALSE)+geom_ribbon(aes(ymin=avg_CIub,ymax=avg_CIlb),alpha=.2)+facet_wrap(~exp_name)+ggtitle(&quot;Mean OR-val of 100 simulations ~ Subsample Size&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;Mean OR-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-#log transformed, with CIs
-orvalplot3b&lt;-ggplot(datapointsOR,aes(x=subsample_size,y=log(avg_OR)))+geom_point()+geom_smooth(se=FALSE)+geom_ribbon(aes(ymin=log(avg_CIub),ymax=log(avg_CIlb)),alpha=.2)+facet_wrap(~exp_name)+ggtitle(&quot;Mean OR-val of 100 simulations ~ Subsample Size&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;Log(Mean OR-value)&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-orvalplot4&lt;-ggplot(datapointsOR,aes(x=subsample_size,y=log(avg_OR),color=exp_name))+geom_point()+geom_smooth(se=FALSE)+geom_ribbon(aes(ymin=log(avg_CIub),ymax=log(avg_CIlb)),alpha=.2)+ggtitle(&quot;Mean OR-val of 100 simulations ~ Subsample Size&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;Log(Mean OR-value)&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))
-
-########################Kolmogorov Smirnov Probability Distribution Test########################
-#Making KS Test DF
-ct=1
-expcombinations=(factorial(nexperiments)/(factorial(2)*factorial(nexperiments-2)))
-exppermutations=(factorial(nexperiments)/(factorial(nexperiments-2)))
-ksresults&lt;-matrix(nrow=nsubsamples*exppermutations,ncol=8)
-for (subsamplenumber in 1:nsubsamples){
-datapointsks=simresults %&gt;%
-  filter(subsample_size==subsamplenumber) %&gt;%
-  group_by(exp_num,sim_num)
-  ksresults[c(ct:((ct+exppermutations)-1)),2]=subsamplenumber
-  for (expnumber in 1:nexperiments){
-    for (secondexpnumber in 1:nexperiments){
-      if(secondexpnumber!=expnumber){ #To Avoid comparing Exp1 to Exp1 etc
-    kstestresults=ks.test(datapointsks$OR_val[datapointsks$exp_num==expnumber],datapointsks$OR_val[datapointsks$exp_num==secondexpnumber])
-      ksresults[ct,1]=ct #Total Count
-      ksresults[ct,3]=expnumber #Experiment Number
-      ksresults[ct,4]=datapointsks$exp_name[expnumber] #Experiment Name
-      ksresults[ct,5]=secondexpnumber #Experiment Number
-      ksresults[ct,6]=datapointsks$exp_name[secondexpnumber] #Experiment Name
-      ksresults[ct,7]=kstestresults$p.value #Experiment P-value. Trying to convert it into numerics
-      ksresults[ct,8]=kstestresults$statistic #Experiment OR-value
-      ct=ct+1
-      }
-    }
-  }
-}</code></pre>
-<pre><code>Warning in ks.test(datapointsks$OR_val[datapointsks$exp_num ==
-expnumber], : p-value will be approximate in the presence of ties</code></pre>
 <pre><code>Warning in ks.test(datapointsks$OR_val[datapointsks$exp_num ==
 expnumber], : p-value will be approximate in the presence of ties
 
@@ -1741,18 +1503,10 @@ Warning in ks.test(datapointsks$OR_val[datapointsks$exp_num ==
 expnumber], : p-value will be approximate in the presence of ties
 
 Warning in ks.test(datapointsks$OR_val[datapointsks$exp_num ==
-expnumber], : p-value will be approximate in the presence of ties</code></pre>
-<pre class="r"><code>#Managing Ksresults dataframe
-colnames(ksresults)=c(&quot;totCt&quot;,&quot;subsample_size&quot;,&quot;exp_num1&quot;,&quot;exp_name1&quot;,&quot;exp_num2&quot;,&quot;exp_name2&quot;,&quot;p_val&quot;,&quot;d_val&quot;)
-ksresults=as.data.frame(ksresults, stringsAsFactors = F, )
-ksresults=transform(ksresults,subample_size=as.character(subsample_size),exp_num1=as.character(exp_num1),exp_num2=as.character(exp_num2),p_val=as.character(p_val),d_val=as.character(d_val))
-ksresults=transform(ksresults,subsample_size=as.numeric(subsample_size),exp_num1=as.numeric(exp_num1),exp_num2=as.numeric(exp_num2),p_val=as.numeric(p_val),d_val=as.numeric(d_val))
+expnumber], : p-value will be approximate in the presence of ties
 
-#Data Sorting
-datapoints_ks_pval=ksresults %&gt;%
-  filter(exp_num2==4)
-#Plotting  
-  ksvalplot&lt;-ggplot(datapoints_ks_pval,aes(x=subsample_size,p_val,color=exp_name1))+geom_point()+geom_smooth(se=FALSE,size=1.5)+ggtitle(&quot;P-value from KS Test across 100 simulations&quot;)+xlab(&quot;Subsample Size&quot;)+ylab(&quot;P-value&quot;)+theme_bw()+theme(plot.title = element_text(hjust=.5))</code></pre>
+Warning in ks.test(datapointsks$OR_val[datapointsks$exp_num ==
+expnumber], : p-value will be approximate in the presence of ties</code></pre>
 <pre class="r"><code>orvalplot1</code></pre>
 <pre><code>`geom_smooth()` using method = &#39;loess&#39;</code></pre>
 <pre><code>Warning: Removed 11 rows containing non-finite values (stat_smooth).</code></pre>
