@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>About</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">medsproject</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jdblischak/workflowr">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">About</h1>
+
+</div>
+
+
+<p><strong>Last updated:</strong> 2018-07-08</p>
+<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
+<ul>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20180708)</code> </summary></p>
+<p>The command <code>set.seed(20180708)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/medsproject/tree/2579e06c67c183f6baf49f91d65f407609d9c9c4" target="_blank">2579e06</a> </summary></p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  .DS_Store
+    Untracked:  data/All_Data_V2.csv
+
+Unstaged changes:
+    Modified:   first_script.R
+
+</code></pre>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+</li>
+</ul>
+<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/2579e06c67c183f6baf49f91d65f407609d9c9c4/analysis/about.Rmd" target="_blank">2579e06</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-07-08
+</td>
+<td style="text-align:left;">
+wflow_publish(“analysis/*Rmd“)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/2cf442f4ee3bfca32700de5fbdac2d51b71aef6c/analysis/about.Rmd" target="_blank">2cf442f</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-07-08
+</td>
+<td style="text-align:left;">
+Start workflowr project.
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<p></details></p>
+<hr />
+<p>This is the Mutual Exclusivity Downsampling Website.</p>
+<pre class="r"><code># ##################################Hardcoded Parts#############################################################################
+  nsubsamples=12 # maybe this can be removed because.
+  nsims&lt;-100 #
+  #Positive control 1
+  nameposctrl1&lt;-&#39;BRAF&#39;
+  #Positive control 1
+  nameposctrl2&lt;-&#39;NRAS&#39;
+  #Oncogene in Question
+  namegene&lt;-&#39;ATI&#39;
+  #Mutation Boolean (Y or N)
+  mtn&lt;-&#39;N&#39;
+  #Name Mutation for Positive Ctrl 1
+  nameposctrl1mt&lt;-&#39;V600E&#39;
+  #Name of Mutation for Positive Ctrl 2
+  nameposctrl2mt&lt;-&#39;Q61L&#39;
+
+##################################Data Sorting#############################################################################
+alldata=read.csv(&quot;data/All_Data_V2.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
+
+#Sorting by whether user wants to search by specific mutations or the general format overall
+if(mtn==&#39;N&#39;) {
+  Positive_Ctrl1=as.numeric(!grepl(&quot;NaN&quot;,do.call(&quot;$&quot;,list(alldata,nameposctrl1)),ignore.case = TRUE))
+  Positive_Ctrl2=as.numeric(!grepl(&quot;NaN&quot;,do.call(&quot;$&quot;,list(alldata,nameposctrl2)),ignore.case = TRUE))
+} else {
+  Positive_Ctrl1=as.numeric(grepl(nameposctrl1mt,do.call(&quot;$&quot;,list(alldata,nameposctrl1)),ignore.case = TRUE))
+  Positive_Ctrl2=as.numeric(grepl(nameposctrl2mt,do.call(&quot;$&quot;,list(alldata,nameposctrl2)),ignore.case = TRUE))
+}
+genex=as.numeric(!grepl(paste(c(&quot;NaN&quot;,&quot;0&quot;), collapse = &quot;|&quot;),do.call(&quot;$&quot;,list(alldata,namegene)))) #Searching for &#39;NaN&#39; or &#39;0&#39; in desired gene. A positive hit returns 0 and vise versa.
+
+alldata_comp=cbind(alldata[,c(1,2)],Positive_Ctrl1,Positive_Ctrl2,genex) #Data frame with all the data compiled. I add in random array to this later
+
+genex_replication_prop=sum(genex)/length(genex) #Calculating Replication Proportion
+
+#Creating Random Array (Negative Control)
+rndmarray=rbinom(length(Positive_Ctrl1),1,genex_replication_prop) #change alldata            #Decided to just call random array in the for-loop
+alldata_comp=cbind(alldata_comp,rndmarray) #Adding in random array to compiled gene data
+
+all_genex     =alldata_comp[alldata_comp$genex!=0,] #These will be used later for sampling
+all_not_genex =alldata_comp[alldata_comp$genex==0,]
+all_pc1       =alldata_comp[alldata_comp$Positive_Ctrl1!=0,]
+all_not_pc1   =alldata_comp[alldata_comp$Positive_Ctrl1==0,]
+all_pc2       =alldata_comp[alldata_comp$Positive_Ctrl2!=0,]
+all_not_pc2   =alldata_comp[alldata_comp$Positive_Ctrl2==0,]
+all_rndm      =alldata_comp[alldata_comp$rndmarray!=0,]
+all_not_rndm  =alldata_comp[alldata_comp$rndmarray==0,]
+
+#max subsample size is whichever integer is the minimum of: number of genex in sample vs. number of NOTgenex or PC1 or PC2 in sample*genexreplication proportion. For example we had 165 PC1s, therefore 340-175=165 PC1s in our data. Since we want to sample 7.35% positive hits and 92.65% negative hits, a sample containing too many positive hits can impose an upper bound on our subsampling size.
+maxsubsamplesize=min(c(genex_replication_prop*length(alldata_comp$Positive_Ctrl1),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl1))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl2))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$genex))*genex_replication_prop)))
+##################################Errors#############################################################################
+#Part in the code where exceeding the max limit, i.e. 25, returns an error
+if(nsubsamples&gt;maxsubsamplesize){
+  stop(&quot;Desired Subsample Size Exceeds Maxium Subsample Size&quot;)
+}
+#Returns error if max value &gt; 1. Will this ever be a problem?
+if(max(alldata_comp$Positive_Ctrl1|alldata_comp$Positive_Ctrl2|alldata_comp$genex)&gt;1){
+  stop(&quot;Data Contains Integers &gt;1. Please use either logicals or characters&quot;)
+}
+print(paste(&quot;Current proportion of GeneX =&quot;,round(genex_replication_prop*100,3),&quot;%&quot;))#print to console</code></pre>
+<pre><code>[1] &quot;Current proportion of GeneX = 7.353 %&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;Total Number of Samples =&quot;,length(alldata_comp[,1])))</code></pre>
+<pre><code>[1] &quot;Total Number of Samples = 340&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;Number of Positive Control 1 Hits =&quot;,sum(alldata_comp$Positive_Ctrl1)))</code></pre>
+<pre><code>[1] &quot;Number of Positive Control 1 Hits = 175&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;Number of Positive Control 2 Hits =&quot;,sum(alldata_comp$Positive_Ctrl2)))</code></pre>
+<pre><code>[1] &quot;Number of Positive Control 2 Hits = 95&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;Number of Gene of Interest Hits =&quot;,sum(alldata_comp$genex)))</code></pre>
+<pre><code>[1] &quot;Number of Gene of Interest Hits = 25&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;The maximum allowed subsample size is&quot;,maxsubsamplesize))</code></pre>
+<pre><code>[1] &quot;The maximum allowed subsample size is 12&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;Therefore, during simulations, Positive Control 1 will be downsampled from&quot;,sum(alldata_comp$Positive_Ctrl1),&quot;to&quot;,maxsubsamplesize,&quot;, and Positive Control 2 will be downsampled from&quot;,sum(alldata_comp$Positive_Ctrl2),&quot;to&quot;,maxsubsamplesize))</code></pre>
+<pre><code>[1] &quot;Therefore, during simulations, Positive Control 1 will be downsampled from 175 to 12 , and Positive Control 2 will be downsampled from 95 to 12&quot;</code></pre>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.4.1 (2017-06-30)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS High Sierra 10.13.5
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] workflowr_1.0.1   Rcpp_0.12.17      digest_0.6.15    
+ [4] rprojroot_1.3-2   R.methodsS3_1.7.1 backports_1.1.2  
+ [7] git2r_0.21.0      magrittr_1.5      evaluate_0.10.1  
+[10] stringi_1.2.3     whisker_0.3-2     R.oo_1.22.0      
+[13] R.utils_2.6.0     rmarkdown_1.10    tools_3.4.1      
+[16] stringr_1.3.1     yaml_2.1.19       compiler_3.4.1   
+[19] htmltools_0.3.6   knitr_1.20       </code></pre>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+  analysis was created with
+  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.0.1
+</p>
+<hr>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
