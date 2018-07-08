@@ -5,4 +5,72 @@ output:
     toc: false
 ---
 
-Describe your project.
+This is the Mutual Exclusivity Downsampling Website.
+
+```{r}
+# ##################################Hardcoded Parts#############################################################################
+  nsubsamples=12 # maybe this can be removed because.
+  nsims<-100 #
+  #Positive control 1
+  nameposctrl1<-'BRAF'
+  #Positive control 1
+  nameposctrl2<-'NRAS'
+  #Oncogene in Question
+  namegene<-'ATI'
+  #Mutation Boolean (Y or N)
+  mtn<-'N'
+  #Name Mutation for Positive Ctrl 1
+  nameposctrl1mt<-'V600E'
+  #Name of Mutation for Positive Ctrl 2
+  nameposctrl2mt<-'Q61L'
+
+##################################Data Sorting#############################################################################
+alldata=read.csv("data/All_Data_V2.csv",sep=",",header=T,stringsAsFactors=F)
+
+#Sorting by whether user wants to search by specific mutations or the general format overall
+if(mtn=='N') {
+  Positive_Ctrl1=as.numeric(!grepl("NaN",do.call("$",list(alldata,nameposctrl1)),ignore.case = TRUE))
+  Positive_Ctrl2=as.numeric(!grepl("NaN",do.call("$",list(alldata,nameposctrl2)),ignore.case = TRUE))
+} else {
+  Positive_Ctrl1=as.numeric(grepl(nameposctrl1mt,do.call("$",list(alldata,nameposctrl1)),ignore.case = TRUE))
+  Positive_Ctrl2=as.numeric(grepl(nameposctrl2mt,do.call("$",list(alldata,nameposctrl2)),ignore.case = TRUE))
+}
+genex=as.numeric(!grepl(paste(c("NaN","0"), collapse = "|"),do.call("$",list(alldata,namegene)))) #Searching for 'NaN' or '0' in desired gene. A positive hit returns 0 and vise versa.
+
+alldata_comp=cbind(alldata[,c(1,2)],Positive_Ctrl1,Positive_Ctrl2,genex) #Data frame with all the data compiled. I add in random array to this later
+
+genex_replication_prop=sum(genex)/length(genex) #Calculating Replication Proportion
+
+#Creating Random Array (Negative Control)
+rndmarray=rbinom(length(Positive_Ctrl1),1,genex_replication_prop) #change alldata            #Decided to just call random array in the for-loop
+alldata_comp=cbind(alldata_comp,rndmarray) #Adding in random array to compiled gene data
+
+all_genex     =alldata_comp[alldata_comp$genex!=0,] #These will be used later for sampling
+all_not_genex =alldata_comp[alldata_comp$genex==0,]
+all_pc1       =alldata_comp[alldata_comp$Positive_Ctrl1!=0,]
+all_not_pc1   =alldata_comp[alldata_comp$Positive_Ctrl1==0,]
+all_pc2       =alldata_comp[alldata_comp$Positive_Ctrl2!=0,]
+all_not_pc2   =alldata_comp[alldata_comp$Positive_Ctrl2==0,]
+all_rndm      =alldata_comp[alldata_comp$rndmarray!=0,]
+all_not_rndm  =alldata_comp[alldata_comp$rndmarray==0,]
+
+#max subsample size is whichever integer is the minimum of: number of genex in sample vs. number of NOTgenex or PC1 or PC2 in sample*genexreplication proportion. For example we had 165 PC1s, therefore 340-175=165 PC1s in our data. Since we want to sample 7.35% positive hits and 92.65% negative hits, a sample containing too many positive hits can impose an upper bound on our subsampling size.
+maxsubsamplesize=min(c(genex_replication_prop*length(alldata_comp$Positive_Ctrl1),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl1))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl2))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$genex))*genex_replication_prop)))
+##################################Errors#############################################################################
+#Part in the code where exceeding the max limit, i.e. 25, returns an error
+if(nsubsamples>maxsubsamplesize){
+  stop("Desired Subsample Size Exceeds Maxium Subsample Size")
+}
+#Returns error if max value > 1. Will this ever be a problem?
+if(max(alldata_comp$Positive_Ctrl1|alldata_comp$Positive_Ctrl2|alldata_comp$genex)>1){
+  stop("Data Contains Integers >1. Please use either logicals or characters")
+}
+print(paste("Current proportion of GeneX =",round(genex_replication_prop*100,3),"%"))#print to console
+print(paste("Total Number of Samples =",length(alldata_comp[,1])))
+print(paste("Number of Positive Control 1 Hits =",sum(alldata_comp$Positive_Ctrl1)))
+print(paste("Number of Positive Control 2 Hits =",sum(alldata_comp$Positive_Ctrl2)))
+print(paste("Number of Gene of Interest Hits =",sum(alldata_comp$genex)))
+print(paste("The maximum allowed subsample size is",maxsubsamplesize))
+print(paste("Therefore, during simulations, Positive Control 1 will be downsampled from",sum(alldata_comp$Positive_Ctrl1),"to",maxsubsamplesize,", and Positive Control 2 will be downsampled from",sum(alldata_comp$Positive_Ctrl2),"to",maxsubsamplesize))
+```
+
