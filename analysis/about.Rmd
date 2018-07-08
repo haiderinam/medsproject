@@ -5,7 +5,9 @@ output:
     toc: false
 ---
 
-Made by Haider Inam
-PhD Student at Penn State University
-Justin Pritchard Lab
-[Pritchard Lab Website](https://sites.psu.edu/pritchardlab/)
+#Made by Haider Inam  
+###PhD Student at Penn State University  
+###Justin Pritchard Lab  
+###[Pritchard Lab Website](https://sites.psu.edu/pritchardlab/)
+
+![](https://sites.psu.edu/pritchardlab/files/2017/10/haider-1636qlw.png)  
