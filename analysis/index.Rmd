@@ -8,7 +8,7 @@ output:
 
 Mutual Exclusivity Downsampling Demo
 
-```{r}
+```{r, echo=FALSE}
 #Run function with this: trasformabilitychecker(12,100,'BRAF','NRAS','ATI','N','V600E','Q61L') 
 #meds mutual exclusivity ds
 # trasformabilitychecker<- function(nsubsamples,nsims,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt){
