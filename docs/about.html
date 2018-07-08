@@ -225,27 +225,11 @@ div.section {
 <strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
 <ul>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p><details> <summary> <strong style="color:red;">✖</strong> <strong>R Markdown file:</strong> uncommitted changes </summary> The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20180708)</code> </summary></p>
-<p>The command <code>set.seed(20180708)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/medsproject/tree/2579e06c67c183f6baf49f91d65f407609d9c9c4" target="_blank">2579e06</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/medsproject/tree/e37fd6a6173e4ed381cae8d4e5c2283703e23eb4" target="_blank">e37fd6a</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -256,6 +240,8 @@ Untracked files:
     Untracked:  data/All_Data_V2.csv
 
 Unstaged changes:
+    Modified:   analysis/about.Rmd
+    Modified:   analysis/index.Rmd
     Modified:   first_script.R
 
 </code></pre>
@@ -285,6 +271,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/medsproject/e37fd6a6173e4ed381cae8d4e5c2283703e23eb4/docs/about.html" target="_blank">e37fd6a</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-07-08
+</td>
+<td style="text-align:left;">
+Build site.
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Rmd
@@ -324,104 +327,7 @@ Start workflowr project.
 </ul>
 <p></details></p>
 <hr />
-<p>This is the Mutual Exclusivity Downsampling Website.</p>
-<pre class="r"><code># ##################################Hardcoded Parts#############################################################################
-  nsubsamples=12 # maybe this can be removed because.
-  nsims&lt;-100 #
-  #Positive control 1
-  nameposctrl1&lt;-&#39;BRAF&#39;
-  #Positive control 1
-  nameposctrl2&lt;-&#39;NRAS&#39;
-  #Oncogene in Question
-  namegene&lt;-&#39;ATI&#39;
-  #Mutation Boolean (Y or N)
-  mtn&lt;-&#39;N&#39;
-  #Name Mutation for Positive Ctrl 1
-  nameposctrl1mt&lt;-&#39;V600E&#39;
-  #Name of Mutation for Positive Ctrl 2
-  nameposctrl2mt&lt;-&#39;Q61L&#39;
-
-##################################Data Sorting#############################################################################
-alldata=read.csv(&quot;data/All_Data_V2.csv&quot;,sep=&quot;,&quot;,header=T,stringsAsFactors=F)
-
-#Sorting by whether user wants to search by specific mutations or the general format overall
-if(mtn==&#39;N&#39;) {
-  Positive_Ctrl1=as.numeric(!grepl(&quot;NaN&quot;,do.call(&quot;$&quot;,list(alldata,nameposctrl1)),ignore.case = TRUE))
-  Positive_Ctrl2=as.numeric(!grepl(&quot;NaN&quot;,do.call(&quot;$&quot;,list(alldata,nameposctrl2)),ignore.case = TRUE))
-} else {
-  Positive_Ctrl1=as.numeric(grepl(nameposctrl1mt,do.call(&quot;$&quot;,list(alldata,nameposctrl1)),ignore.case = TRUE))
-  Positive_Ctrl2=as.numeric(grepl(nameposctrl2mt,do.call(&quot;$&quot;,list(alldata,nameposctrl2)),ignore.case = TRUE))
-}
-genex=as.numeric(!grepl(paste(c(&quot;NaN&quot;,&quot;0&quot;), collapse = &quot;|&quot;),do.call(&quot;$&quot;,list(alldata,namegene)))) #Searching for &#39;NaN&#39; or &#39;0&#39; in desired gene. A positive hit returns 0 and vise versa.
-
-alldata_comp=cbind(alldata[,c(1,2)],Positive_Ctrl1,Positive_Ctrl2,genex) #Data frame with all the data compiled. I add in random array to this later
-
-genex_replication_prop=sum(genex)/length(genex) #Calculating Replication Proportion
-
-#Creating Random Array (Negative Control)
-rndmarray=rbinom(length(Positive_Ctrl1),1,genex_replication_prop) #change alldata            #Decided to just call random array in the for-loop
-alldata_comp=cbind(alldata_comp,rndmarray) #Adding in random array to compiled gene data
-
-all_genex     =alldata_comp[alldata_comp$genex!=0,] #These will be used later for sampling
-all_not_genex =alldata_comp[alldata_comp$genex==0,]
-all_pc1       =alldata_comp[alldata_comp$Positive_Ctrl1!=0,]
-all_not_pc1   =alldata_comp[alldata_comp$Positive_Ctrl1==0,]
-all_pc2       =alldata_comp[alldata_comp$Positive_Ctrl2!=0,]
-all_not_pc2   =alldata_comp[alldata_comp$Positive_Ctrl2==0,]
-all_rndm      =alldata_comp[alldata_comp$rndmarray!=0,]
-all_not_rndm  =alldata_comp[alldata_comp$rndmarray==0,]
-
-#max subsample size is whichever integer is the minimum of: number of genex in sample vs. number of NOTgenex or PC1 or PC2 in sample*genexreplication proportion. For example we had 165 PC1s, therefore 340-175=165 PC1s in our data. Since we want to sample 7.35% positive hits and 92.65% negative hits, a sample containing too many positive hits can impose an upper bound on our subsampling size.
-maxsubsamplesize=min(c(genex_replication_prop*length(alldata_comp$Positive_Ctrl1),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl1))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl2))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$genex))*genex_replication_prop)))
-##################################Errors#############################################################################
-#Part in the code where exceeding the max limit, i.e. 25, returns an error
-if(nsubsamples&gt;maxsubsamplesize){
-  stop(&quot;Desired Subsample Size Exceeds Maxium Subsample Size&quot;)
-}
-#Returns error if max value &gt; 1. Will this ever be a problem?
-if(max(alldata_comp$Positive_Ctrl1|alldata_comp$Positive_Ctrl2|alldata_comp$genex)&gt;1){
-  stop(&quot;Data Contains Integers &gt;1. Please use either logicals or characters&quot;)
-}
-print(paste(&quot;Current proportion of GeneX =&quot;,round(genex_replication_prop*100,3),&quot;%&quot;))#print to console</code></pre>
-<pre><code>[1] &quot;Current proportion of GeneX = 7.353 %&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Total Number of Samples =&quot;,length(alldata_comp[,1])))</code></pre>
-<pre><code>[1] &quot;Total Number of Samples = 340&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Number of Positive Control 1 Hits =&quot;,sum(alldata_comp$Positive_Ctrl1)))</code></pre>
-<pre><code>[1] &quot;Number of Positive Control 1 Hits = 175&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Number of Positive Control 2 Hits =&quot;,sum(alldata_comp$Positive_Ctrl2)))</code></pre>
-<pre><code>[1] &quot;Number of Positive Control 2 Hits = 95&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Number of Gene of Interest Hits =&quot;,sum(alldata_comp$genex)))</code></pre>
-<pre><code>[1] &quot;Number of Gene of Interest Hits = 25&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;The maximum allowed subsample size is&quot;,maxsubsamplesize))</code></pre>
-<pre><code>[1] &quot;The maximum allowed subsample size is 12&quot;</code></pre>
-<pre class="r"><code>print(paste(&quot;Therefore, during simulations, Positive Control 1 will be downsampled from&quot;,sum(alldata_comp$Positive_Ctrl1),&quot;to&quot;,maxsubsamplesize,&quot;, and Positive Control 2 will be downsampled from&quot;,sum(alldata_comp$Positive_Ctrl2),&quot;to&quot;,maxsubsamplesize))</code></pre>
-<pre><code>[1] &quot;Therefore, during simulations, Positive Control 1 will be downsampled from 175 to 12 , and Positive Control 2 will be downsampled from 95 to 12&quot;</code></pre>
-<div id="session-information" class="section level2">
-<h2>Session information</h2>
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.4.1 (2017-06-30)
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
-Running under: macOS High Sierra 10.13.5
-
-Matrix products: default
-BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
-
-locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-loaded via a namespace (and not attached):
- [1] workflowr_1.0.1   Rcpp_0.12.17      digest_0.6.15    
- [4] rprojroot_1.3-2   R.methodsS3_1.7.1 backports_1.1.2  
- [7] git2r_0.21.0      magrittr_1.5      evaluate_0.10.1  
-[10] stringi_1.2.3     whisker_0.3-2     R.oo_1.22.0      
-[13] R.utils_2.6.0     rmarkdown_1.10    tools_3.4.1      
-[16] stringr_1.3.1     yaml_2.1.19       compiler_3.4.1   
-[19] htmltools_0.3.6   knitr_1.20       </code></pre>
-</div>
+<p>Made by Haider Inam PhD Student at Penn State University Justin Pritchard Lab</p>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
