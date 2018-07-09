@@ -8,7 +8,7 @@ output:
 
 Mutual Exclusivity Downsampling Demo
 
-```{r, echo=FALSE}
+```{r,warning=FALSE}
 #Run function with this: trasformabilitychecker(12,100,'BRAF','NRAS','ATI','N','V600E','Q61L') 
 #meds mutual exclusivity ds
 # trasformabilitychecker<- function(nsubsamples,nsims,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt){
@@ -292,7 +292,7 @@ datapoints_ks_pval=ksresults %>%
   ksvalplot<-ggplot(datapoints_ks_pval,aes(x=subsample_size,p_val,color=exp_name1))+geom_point()+geom_smooth(se=FALSE,size=1.5)+ggtitle("P-value from KS Test across 100 simulations")+xlab("Subsample Size")+ylab("P-value")+theme_bw()+theme(plot.title = element_text(hjust=.5))
 
 ```
-```{r}
+```{r,warning=FALSE}
 orvalplot1
 orvalplot2a
 orvalplot2b
