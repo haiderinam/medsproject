@@ -3,10 +3,11 @@ title: "Home"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
-    toc: false
+    theme: journal
+    toc: true
 ---
 Source: add github source here
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, }
 knitr::opts_chunk$set(echo = TRUE)
 ###Run function with this: trasformabilitychecker(12,100,'BRAF','NRAS','ATI','N','V600E','Q61L') 
 ###meds mutual exclusivity ds
@@ -94,7 +95,7 @@ Number of Positive Control 1 Hits =`r sum(alldata_comp$Positive_Ctrl1)`
 Number of Positive Control 2 Hits = `r sum(alldata_comp$Positive_Ctrl2)`  
 Number of Gene of Interest Hits =`r sum(alldata_comp$genex)`  
 The maximum allowed subsample size is `r maxsubsamplesize`  
-Therefore, during simulations, Positive Control 1 will be downsampled from `r sum(alldata_comp$Positive_Ctrl1) ` to `r maxsubsamplesize` and Positive Control 2 will be downsampled from `r sum(alldata_comp$Positive_Ctrl2) ` to `r maxsubsamplesize`  
+Therefore, during simulations, Positive Control 1 will be downsampled from `r sum(alldata_comp$Positive_Ctrl1) ` to `r maxsubsamplesize`.   Positive Control 2 will be downsampled from `r sum(alldata_comp$Positive_Ctrl2) ` to `r maxsubsamplesize`  
 
 #Contingency Table Maker
 ```{r}
@@ -307,23 +308,23 @@ datapoints_ks_pval=ksresults %>%
 
 ```
 ###Plotting the plots created above  
-```{r}
+```{r,echo=FALSE, warning=FALSE,message=FALSE}
 orvalplot1
 ```
   
 ####Note that the odds-ratio is much lower between positive control1, positive control 2 than for other samples. This points to the fact that oods ratios between p1 and p2 are mutually exclusive
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
 orvalplot2a
 ```
   
 ####This is the same as plot as the odds ratio plot above except that all the conditions are combined to be on the same plot
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
 orvalplot3a
 ```
   
 ####This is the odds ratio plot with confidence intervals added
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
 orvalplot3b
 ```
   
@@ -333,7 +334,7 @@ orvalplot4
 ```
   
 ####This is the same odds ratio plot as above with all plots combined
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
 ksvalplot
 ```
   

@@ -2,17 +2,14 @@
 title: "About"
 output:
   workflowr::wflow_html:
-    toc: false
+    theme: journal
+    toc: true
 ---
 
 #Made by Haider Inam  
-###PhD Student at Penn State University  
-###Justin Pritchard Lab  
-###[Pritchard Lab Website](https://sites.psu.edu/pritchardlab/)
+####PhD student at Penn State University  
+####[Justin Pritchard Lab](https://sites.psu.edu/pritchardlab/)
 
-
-
-![](https://sites.psu.edu/pritchardlab/files/2017/10/haider-1636qlw.png)  
 
 ###Check out the Abl Kinase domain in PSU's theme colors:
 ![](assets/kd.png)
@@ -20,3 +17,17 @@ output:
 ###Also check out the video I made for the kinase domain of Abl
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YtvVgTesSrM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+
+## Members of the Prichard lab {.tabset .tabset-fade .tabset-pills}
+
+### Haider Inam
+![](https://sites.psu.edu/pritchardlab/files/2018/01/haider_pritchard_lab-wdakch.png)
+
+### Justin Prichard
+![](https://sites.psu.edu/pritchardlab/files/2018/01/justin_pritchard_phd-1xdw07z.png)  
+
+### Scott Leighow
+![](https://sites.psu.edu/pritchardlab/files/2018/01/scott-v2-22793tk.png)  
+
+### Chuan Liu
+![](https://sites.psu.edu/pritchardlab/files/2018/01/Chuan-v2-25r7fkc.png)

@@ -15,10 +15,13 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -169,6 +172,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -244,7 +342,7 @@ div.section {
 </details>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/medsproject/tree/d3ca8819b58a8181d6f73ea219e965d977e98ef0" target="_blank">d3ca881</a> </summary></p>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/haiderinam/medsproject/tree/f5bdc9721ef7719062460da60a5f0f30d91c8c81" target="_blank">f5bdc97</a> </summary></p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 <pre><code>
 Ignored files:
@@ -254,16 +352,13 @@ Ignored files:
 
 Untracked files:
     Untracked:  ORvalplot3a.pdf
-    Untracked:  analysis/.DS_Store
-    Untracked:  analysis/data/
-    Untracked:  data/.DS_Store
-    Untracked:  docs/assets/
+    Untracked:  docs/assets/kd_abl_movie_2.mpg
     Untracked:  testmkdn.Rmd
 
 Unstaged changes:
-    Modified:   .DS_Store
+    Modified:   analysis/about.Rmd
     Modified:   analysis/index.Rmd
-    Modified:   docs/.DS_Store
+    Modified:   analysis/license.Rmd
 
 </code></pre>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
@@ -292,6 +387,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/be0a07e995678440b7d0c868feed0796cc871c14/analysis/index.Rmd" target="_blank">be0a07e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-08-06
+</td>
+<td style="text-align:left;">
+cleaned up the index page
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+html
+</td>
+<td style="text-align:left;">
+<a href="https://cdn.rawgit.com/haiderinam/medsproject/be0a07e995678440b7d0c868feed0796cc871c14/docs/index.html" target="_blank">be0a07e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-08-06
+</td>
+<td style="text-align:left;">
+cleaned up the index page
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 html
@@ -541,7 +670,7 @@ Number of Positive Control 1 Hits =175<br />
 Number of Positive Control 2 Hits = 95<br />
 Number of Gene of Interest Hits =25<br />
 The maximum allowed subsample size is 12<br />
-Therefore, during simulations, Positive Control 1 will be downsampled from 175 to 12 and Positive Control 2 will be downsampled from 95 to 12</p>
+Therefore, during simulations, Positive Control 1 will be downsampled from 175 to 12. Positive Control 2 will be downsampled from 95 to 12</p>
 </div>
 <div id="contingency-table-maker" class="section level1">
 <h1>Contingency Table Maker</h1>
@@ -650,38 +779,208 @@ for (subsamplenumber in 1:nsubsamples){
 <h2>Data Analysis and Plotting</h2>
 <div id="plotting-the-plots-created-above" class="section level3">
 <h3>Plotting the plots created above</h3>
-<pre class="r"><code>orvalplot1</code></pre>
-<pre><code>`geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<pre><code>Warning: Removed 11 rows containing non-finite values (stat_smooth).</code></pre>
 <p><img src="figure/index.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-8-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/be0a07e995678440b7d0c868feed0796cc871c14/docs/figure/index.Rmd/unnamed-chunk-8-1.png" target="_blank">be0a07e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-08-06
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 <div id="note-that-the-odds-ratio-is-much-lower-between-positive-control1-positive-control-2-than-for-other-samples.-this-points-to-the-fact-that-oods-ratios-between-p1-and-p2-are-mutually-exclusive" class="section level4">
 <h4>Note that the odds-ratio is much lower between positive control1, positive control 2 than for other samples. This points to the fact that oods ratios between p1 and p2 are mutually exclusive</h4>
-<pre><code>`geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<pre><code>Warning: Removed 11 rows containing non-finite values (stat_smooth).</code></pre>
 <p><img src="figure/index.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-9-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/be0a07e995678440b7d0c868feed0796cc871c14/docs/figure/index.Rmd/unnamed-chunk-9-1.png" target="_blank">be0a07e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-08-06
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 </div>
 <div id="this-is-the-same-as-plot-as-the-odds-ratio-plot-above-except-that-all-the-conditions-are-combined-to-be-on-the-same-plot" class="section level4">
 <h4>This is the same as plot as the odds ratio plot above except that all the conditions are combined to be on the same plot</h4>
-<pre><code>`geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<pre><code>Warning: Removed 11 rows containing non-finite values (stat_smooth).</code></pre>
 <p><img src="figure/index.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-10-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/be0a07e995678440b7d0c868feed0796cc871c14/docs/figure/index.Rmd/unnamed-chunk-10-1.png" target="_blank">be0a07e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-08-06
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 </div>
 <div id="this-is-the-odds-ratio-plot-with-confidence-intervals-added" class="section level4">
 <h4>This is the odds ratio plot with confidence intervals added</h4>
-<pre><code>`geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<pre><code>Warning: Removed 23 rows containing non-finite values (stat_smooth).</code></pre>
 <p><img src="figure/index.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-11-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/be0a07e995678440b7d0c868feed0796cc871c14/docs/figure/index.Rmd/unnamed-chunk-11-1.png" target="_blank">be0a07e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-08-06
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 </div>
 <div id="this-is-the-odds-ratio-plot-log-transformed-with-confidence-intervals-added" class="section level4">
 <h4>This is the odds ratio plot, log transformed, with confidence intervals added</h4>
 <pre><code>`geom_smooth()` using method = &#39;loess&#39;</code></pre>
 <pre><code>Warning: Removed 23 rows containing non-finite values (stat_smooth).</code></pre>
 <p><img src="figure/index.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-12-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/be0a07e995678440b7d0c868feed0796cc871c14/docs/figure/index.Rmd/unnamed-chunk-12-1.png" target="_blank">be0a07e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-08-06
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 </div>
 <div id="this-is-the-same-odds-ratio-plot-as-above-with-all-plots-combined" class="section level4">
 <h4>This is the same odds ratio plot as above with all plots combined</h4>
-<pre><code>`geom_smooth()` using method = &#39;loess&#39;</code></pre>
 <p><img src="figure/index.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<details> <summary><em>Expand here to see past versions of unnamed-chunk-13-1.png:</em></summary>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/haiderinam/medsproject/blob/be0a07e995678440b7d0c868feed0796cc871c14/docs/figure/index.Rmd/unnamed-chunk-13-1.png" target="_blank">be0a07e</a>
+</td>
+<td style="text-align:left;">
+haiderinam
+</td>
+<td style="text-align:left;">
+2018-08-06
+</td>
+</tr>
+</tbody>
+</table>
+<p></details></p>
 </div>
 <div id="the-p-values-from-the-kolmogorov-smirnov-probability-distribution-test.-note-that-the-p-values-reach-point-of-significance-at-a-subsample-size-of-3.-this-subsample-size-refers-to-the-subsamples-of-the-gene-of-interest-and-not-the-overall-population." class="section level4">
 <h4>The p-values from the kolmogorov smirnov probability distribution test. Note that the p-values reach point of significance at a subsample size of ~3. This subsample size refers to the subsamples of the gene of interest and not the overall population.</h4>
@@ -750,6 +1049,8 @@ footer is added to webpages before the MathJax javascript. -->
 <hr>
 
 
+</div>
+</div>
 
 </div>
 

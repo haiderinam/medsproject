@@ -2,6 +2,7 @@
 title: "License"
 output:
   workflowr::wflow_html:
+    theme: journal
     toc: false
 ---
 
