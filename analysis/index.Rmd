@@ -5,22 +5,23 @@ output:
   workflowr::wflow_html:
     toc: false
 ---
+Source: add github source here
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+###Run function with this: trasformabilitychecker(12,100,'BRAF','NRAS','ATI','N','V600E','Q61L') 
+###meds mutual exclusivity ds
+### trasformabilitychecker<- function(nsubsamples,nsims,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt){
+```
 
-Mutual Exclusivity Downsampling Demo
-
-```{r,warning=FALSE}
-#Run function with this: trasformabilitychecker(12,100,'BRAF','NRAS','ATI','N','V600E','Q61L') 
-#meds mutual exclusivity ds
-# trasformabilitychecker<- function(nsubsamples,nsims,nameposctrl1,nameposctrl2,namegene,mtn,nameposctrl1mt,nameposctrl2mt){
-#Version 10    4/26/18
-#Data can be either in the form of strings (mutation vs NaN) or as numerics (1 vs 0). Logicals (TRUE/FALSE) can be added as well
-# rm(list=ls())
+####Version 10    4/26/18
+####Data can be either in the form of strings (mutation vs NaN) or as numerics (1 vs 0). Logicals (TRUE/FALSE) can be added as well
+```{r,echo=FALSE, include=FALSE}
 require(ggplot2) #is it ok to use this line at the start of the script?
 require(dplyr)
 # library(ggplot2,lib.loc="~/Ati") #this wasn't working so I'm jjust using library(ggplot2)
 library(ggplot2)
 library(dplyr)
-# ##################################Hardcoded Parts#############################################################################
+# ##################################Inputs#############################################################################
   nsubsamples=12 # maybe this can be removed because.
   nsims<-100 #
   #Positive control 1
@@ -35,8 +36,13 @@ library(dplyr)
   nameposctrl1mt<-'V600E'
   #Name of Mutation for Positive Ctrl 2
   nameposctrl2mt<-'Q61L'
+```
+##Data Sorting
+```{r}
+alldata=read.csv("data/All_Data_V2.csv",sep=",",header=T,stringsAsFactors=F)
+```
 
-##################################Data Sorting#############################################################################
+```{r}
 alldata=read.csv("data/All_Data_V2.csv",sep=",",header=T,stringsAsFactors=F)
 
 #Sorting by whether user wants to search by specific mutations or the general format overall
@@ -68,7 +74,10 @@ all_not_rndm  =alldata_comp[alldata_comp$rndmarray==0,]
 
 #max subsample size is whichever integer is the minimum of: number of genex in sample vs. number of NOTgenex or PC1 or PC2 in sample*genexreplication proportion. For example we had 165 PC1s, therefore 340-175=165 PC1s in our data. Since we want to sample 7.35% positive hits and 92.65% negative hits, a sample containing too many positive hits can impose an upper bound on our subsampling size.
 maxsubsamplesize=min(c(genex_replication_prop*length(alldata_comp$Positive_Ctrl1),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl1))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$Positive_Ctrl2))*genex_replication_prop),floor((length(alldata_comp$Positive_Ctrl1)-sum(alldata_comp$genex))*genex_replication_prop)))
-##################################Errors#############################################################################
+```
+## Error Chekcing
+```{r}
+
 #Part in the code where exceeding the max limit, i.e. 25, returns an error
 if(nsubsamples>maxsubsamplesize){
   stop("Desired Subsample Size Exceeds Maxium Subsample Size")
@@ -77,17 +86,18 @@ if(nsubsamples>maxsubsamplesize){
 if(max(alldata_comp$Positive_Ctrl1|alldata_comp$Positive_Ctrl2|alldata_comp$genex)>1){
   stop("Data Contains Integers >1. Please use either logicals or characters")
 }
-print(paste("Current proportion of GeneX =",round(genex_replication_prop*100,3),"%"))#print to console
-print(paste("Total Number of Samples =",length(alldata_comp[,1])))
-print(paste("Number of Positive Control 1 Hits =",sum(alldata_comp$Positive_Ctrl1)))
-print(paste("Number of Positive Control 2 Hits =",sum(alldata_comp$Positive_Ctrl2)))
-print(paste("Number of Gene of Interest Hits =",sum(alldata_comp$genex)))
-print(paste("The maximum allowed subsample size is",maxsubsamplesize))
-print(paste("Therefore, during simulations, Positive Control 1 will be downsampled from",sum(alldata_comp$Positive_Ctrl1),"to",maxsubsamplesize,", and Positive Control 2 will be downsampled from",sum(alldata_comp$Positive_Ctrl2),"to",maxsubsamplesize))
+```
 
+Current proportion of GeneX = `r  round(genex_replication_prop*100,3) `%
+Total Number of Samples = `r length(alldata_comp[,1])`  
+Number of Positive Control 1 Hits =`r sum(alldata_comp$Positive_Ctrl1)`  
+Number of Positive Control 2 Hits = `r sum(alldata_comp$Positive_Ctrl2)`  
+Number of Gene of Interest Hits =`r sum(alldata_comp$genex)`  
+The maximum allowed subsample size is `r maxsubsamplesize`  
+Therefore, during simulations, Positive Control 1 will be downsampled from `r sum(alldata_comp$Positive_Ctrl1) ` to `r maxsubsamplesize` and Positive Control 2 will be downsampled from `r sum(alldata_comp$Positive_Ctrl2) ` to `r maxsubsamplesize`  
 
-##################################Contingency Table Function#############################################################################
-
+#Contingency Table Maker
+```{r}
 contab_maker<- function(gene1,gene2,arrayname) {
   gene1_gene2_nn=nrow(arrayname[gene1==0 & gene2==0,]) #N N
   gene1_gene2_ny=nrow(arrayname[gene1==0 & gene2!=0,]) #N Y
@@ -111,10 +121,11 @@ p_p2_genex=fisher.test(con_tab_pctrl2_genex)
 p_p1_p2=fisher.test(con_tab_pctrl1_pctrl2)
 p_p1_rndm=fisher.test(con_tab_pctrl1_rndmarray)
 p_p2_rndm=fisher.test(con_tab_pctrl2_rndmarray)
-
-##################################Simulations###################################################################################
-# 3 Loops here. For Sumsample size, Simulation Number, and Experiment Number.
-# Experiment number: There are 6 experiments refers to combinations of fisher's test for 4 samples (4C2=6)
+```
+##Simulations
+```{r}
+# There are three Loops here. These loop through sumsample size, simulation Number, and experiment number.
+# Experiment number: There are 6 experiments. This is because  there are 6 possible combinations to combinations of fisher's test for 4 samples (4C2=6)
 
 #Need to modify so that nsubsamples can be a range (like 10:100) rather than a number (like 100)
 nexperiments=6 #to make nexperiments a variable, alldatasamplepvals will need to be defined differently
@@ -188,6 +199,10 @@ for (subsamplenumber in 1:nsubsamples){
     }
   }
 }
+```
+
+##Data Analysis and Plotting
+```{r, echo=FALSE, include=FALSE}
 colnames(simresults)=c("totCt","subsample_size","sim_num","exp_num","exp_name","p_val","OR_val","CIub","CIlb")
 simresults=as.data.frame(simresults, stringsAsFactors = F, )
 simresults=transform(simresults,p_val=as.character(p_val))
@@ -205,15 +220,14 @@ simresults=transform(simresults,subsample_size=as.numeric(subsample_size))
 simresults=transform(simresults,OR_val=as.character(OR_val))
 simresults=transform(simresults,OR_val=as.numeric(OR_val))
 
-simresults=transform(simresults,CIub=as.character(CIub))
+simresults=transform(simresults,CIub=as.character(CIub)) #upper bound
 simresults=transform(simresults,CIub=as.numeric(CIub))
 
-simresults=transform(simresults,CIlb=as.character(CIlb))
+simresults=transform(simresults,CIlb=as.character(CIlb)) #lower bound
 simresults=transform(simresults,CIlb=as.numeric(CIlb))
 
-##################################Plotting#############################################################################
 #Using ggplot
-########Plotting P-values
+##Plotting P-values
 datapoints=simresults %>% 
   group_by(subsample_size,exp_name) %>%
   summarise(avg_p_val=mean(p_val))
@@ -292,12 +306,38 @@ datapoints_ks_pval=ksresults %>%
   ksvalplot<-ggplot(datapoints_ks_pval,aes(x=subsample_size,p_val,color=exp_name1))+geom_point()+geom_smooth(se=FALSE,size=1.5)+ggtitle("P-value from KS Test across 100 simulations")+xlab("Subsample Size")+ylab("P-value")+theme_bw()+theme(plot.title = element_text(hjust=.5))
 
 ```
-```{r,warning=FALSE}
+###Plotting the plots created above  
+```{r}
 orvalplot1
+```
+  
+####Note that the odds-ratio is much lower between positive control1, positive control 2 than for other samples. This points to the fact that oods ratios between p1 and p2 are mutually exclusive
+
+```{r, echo=FALSE}
 orvalplot2a
-orvalplot2b
+```
+  
+####This is the same as plot as the odds ratio plot above except that all the conditions are combined to be on the same plot
+```{r, echo=FALSE}
 orvalplot3a
+```
+  
+####This is the odds ratio plot with confidence intervals added
+```{r, echo=FALSE}
 orvalplot3b
+```
+  
+####This is the odds ratio plot, log transformed, with confidence intervals added
+```{r, echo=FALSE}
 orvalplot4
+```
+  
+####This is the same odds ratio plot as above with all plots combined
+```{r, echo=FALSE}
 ksvalplot
 ```
+  
+####The p-values from the kolmogorov smirnov probability distribution test. Note that the p-values reach point of significance at a subsample size of ~3. This subsample size refers to the subsamples of the gene of interest and not the overall population.  
+
+###To Do:
+Add an ab-line to the p-value plot from the ks-test to show your chosen criteria for p-values. Label this point of significance?
